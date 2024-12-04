@@ -1,0 +1,86 @@
+// protos/music_service.proto
+syntax = "proto3";
+
+package music;
+
+service UserService {
+  rpc ListUsers(Empty) returns (UserList);
+  rpc GetUserById(UserIdRequest) returns (User);
+  rpc CreateUser(User) returns (User);
+  rpc UpdateUser(User) returns (User);
+  rpc DeleteUser(UserIdRequest) returns (Empty);
+}
+
+service SongService {
+  rpc ListSongs(Empty) returns (SongList);
+  rpc GetSongById(SongIdRequest) returns (Song);
+  rpc CreateSong(Song) returns (Song);
+  rpc UpdateSong(Song) returns (Song);
+  rpc DeleteSong(SongIdRequest) returns (Empty);
+}
+
+service PlaylistService {
+  rpc ListPlaylists(Empty) returns (PlaylistList);
+  rpc GetPlaylistById(PlaylistIdRequest) returns (Playlist);
+  rpc CreatePlaylist(Playlist) returns (Playlist);
+  rpc UpdatePlaylist(Playlist) returns (Playlist);
+  rpc DeletePlaylist(PlaylistIdRequest) returns (Empty);
+  rpc AddSongToPlaylist(AddSongRequest) returns (Playlist);
+  rpc RemoveSongFromPlaylist(RemoveSongRequest) returns (Playlist);
+  rpc ListSongsInPlaylist(PlaylistIdRequest) returns (SongList);
+}
+
+message Empty {}
+
+message User {
+  string id = 1;
+  string name = 2;
+  int32 age = 3;
+  repeated string playlists = 4;
+}
+
+message UserList {
+  repeated User users = 1;
+}
+
+message UserIdRequest {
+  string id = 1;
+}
+
+message Song {
+  string id = 1;
+  string name = 2;
+  string artist = 3;
+}
+
+message SongList {
+  repeated Song songs = 1;
+}
+
+message SongIdRequest {
+  string id = 1;
+}
+
+message Playlist {
+  string id = 1;
+  string name = 2;
+  repeated string songs = 3;
+}
+
+message PlaylistList {
+  repeated Playlist playlists = 1;
+}
+
+message PlaylistIdRequest {
+  string id = 1;
+}
+
+message AddSongRequest {
+  string playlistId = 1;
+  string songId = 2;
+}
+
+message RemoveSongRequest {
+  string playlistId = 1;
+  string songId = 2;
+}

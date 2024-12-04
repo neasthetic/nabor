@@ -1,0 +1,99 @@
+<!-- soap/playlist.wsdl -->
+<definitions name="PlaylistService"
+             targetNamespace="http://www.example.org/PlaylistService/"
+             xmlns:tns="http://www.example.org/PlaylistService/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <!-- Tipos Complexos -->
+  <types>
+    <xsd:schema targetNamespace="http://www.example.org/PlaylistService/">
+      <!-- Tipo Playlist -->
+      <xsd:complexType name="Playlist">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:string"/>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="songs" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- Tipo Song -->
+      <xsd:complexType name="Song">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:string"/>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="artist" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- Lista de Playlists -->
+      <xsd:complexType name="PlaylistList">
+        <xsd:sequence>
+          <xsd:element name="playlists" type="tns:Playlist" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- Lista de Músicas -->
+      <xsd:complexType name="SongList">
+        <xsd:sequence>
+          <xsd:element name="songs" type="tns:Song" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- Elementos de Requisição e Resposta -->
+      <xsd:element name="ListPlaylistsRequest" type="xsd:anyType"/>
+      <xsd:element name="ListPlaylistsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="playlistList" type="tns:PlaylistList"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- Defina os elementos para as demais operações de forma similar -->
+      <!-- ... -->
+    </xsd:schema>
+  </types>
+
+  <!-- Mensagens -->
+  <message name="ListPlaylistsRequest">
+    <part name="parameters" element="tns:ListPlaylistsRequest"/>
+  </message>
+  <message name="ListPlaylistsResponse">
+    <part name="parameters" element="tns:ListPlaylistsResponse"/>
+  </message>
+
+  <!-- Mensagens para as demais operações -->
+  <!-- ... -->
+
+  <!-- PortType -->
+  <portType name="PlaylistServicePortType">
+    <operation name="ListPlaylists">
+      <input message="tns:ListPlaylistsRequest"/>
+      <output message="tns:ListPlaylistsResponse"/>
+    </operation>
+    <!-- Outras operações -->
+    <!-- ... -->
+  </portType>
+
+  <!-- Binding -->
+  <binding name="PlaylistServiceBinding" type="tns:PlaylistServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <!-- Operações -->
+    <operation name="ListPlaylists">
+      <soap:operation soapAction="ListPlaylists"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <!-- Outras operações -->
+    <!-- ... -->
+  </binding>
+
+  <!-- Serviço -->
+  <service name="PlaylistService">
+    <port name="PlaylistServicePort" binding="tns:PlaylistServiceBinding">
+      <soap:address location="http://localhost:8000/playlistwsdl"/>
+    </port>
+  </service>
+</definitions>

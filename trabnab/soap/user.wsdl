@@ -1,0 +1,271 @@
+<!-- soap/user.wsdl -->
+<definitions name="UserService"
+             targetNamespace="http://www.example.org/UserService/"
+             xmlns:tns="http://www.example.org/UserService/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <!-- Tipos Complexos -->
+  <types>
+    <xsd:schema targetNamespace="http://www.example.org/UserService/">
+      <!-- Tipo User -->
+      <xsd:complexType name="User">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:string"/>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="age" type="xsd:int"/>
+          <xsd:element name="playlists" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- Tipo Playlist -->
+      <xsd:complexType name="Playlist">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:string"/>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="songs" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- Lista de Usuários -->
+      <xsd:complexType name="UserList">
+        <xsd:sequence>
+          <xsd:element name="users" type="tns:User" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- Lista de Playlists -->
+      <xsd:complexType name="PlaylistList">
+        <xsd:sequence>
+          <xsd:element name="playlists" type="tns:Playlist" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- Elementos de Requisição e Resposta -->
+      <xsd:element name="ListUsersRequest" type="xsd:anyType"/>
+      <xsd:element name="ListUsersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userList" type="tns:UserList"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetUserByIdRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUserByIdResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="user" type="tns:User"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="CreateUserRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="user" type="tns:User"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="user" type="tns:User"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="UpdateUserRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="user" type="tns:User"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UpdateUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="user" type="tns:User"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="DeleteUserRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteUserResponse" type="xsd:anyType"/>
+
+      <xsd:element name="ListUserPlaylistsRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ListUserPlaylistsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="playlistList" type="tns:PlaylistList"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="AddPlaylistToUserRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string"/>
+            <xsd:element name="playlistId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddPlaylistToUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="user" type="tns:User"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <!-- Mensagens -->
+  <message name="ListUsersRequest">
+    <part name="parameters" element="tns:ListUsersRequest"/>
+  </message>
+  <message name="ListUsersResponse">
+    <part name="parameters" element="tns:ListUsersResponse"/>
+  </message>
+
+  <message name="GetUserByIdRequest">
+    <part name="parameters" element="tns:GetUserByIdRequest"/>
+  </message>
+  <message name="GetUserByIdResponse">
+    <part name="parameters" element="tns:GetUserByIdResponse"/>
+  </message>
+
+  <message name="CreateUserRequest">
+    <part name="parameters" element="tns:CreateUserRequest"/>
+  </message>
+  <message name="CreateUserResponse">
+    <part name="parameters" element="tns:CreateUserResponse"/>
+  </message>
+
+  <message name="UpdateUserRequest">
+    <part name="parameters" element="tns:UpdateUserRequest"/>
+  </message>
+  <message name="UpdateUserResponse">
+    <part name="parameters" element="tns:UpdateUserResponse"/>
+  </message>
+
+  <message name="DeleteUserRequest">
+    <part name="parameters" element="tns:DeleteUserRequest"/>
+  </message>
+  <message name="DeleteUserResponse">
+    <part name="parameters" element="tns:DeleteUserResponse"/>
+  </message>
+
+  <message name="ListUserPlaylistsRequest">
+    <part name="parameters" element="tns:ListUserPlaylistsRequest"/>
+  </message>
+  <message name="ListUserPlaylistsResponse">
+    <part name="parameters" element="tns:ListUserPlaylistsResponse"/>
+  </message>
+
+  <message name="AddPlaylistToUserRequest">
+    <part name="parameters" element="tns:AddPlaylistToUserRequest"/>
+  </message>
+  <message name="AddPlaylistToUserResponse">
+    <part name="parameters" element="tns:AddPlaylistToUserResponse"/>
+  </message>
+
+  <!-- PortType -->
+  <portType name="UserServicePortType">
+    <operation name="ListUsers">
+      <input message="tns:ListUsersRequest"/>
+      <output message="tns:ListUsersResponse"/>
+    </operation>
+    <operation name="GetUserById">
+      <input message="tns:GetUserByIdRequest"/>
+      <output message="tns:GetUserByIdResponse"/>
+    </operation>
+    <operation name="CreateUser">
+      <input message="tns:CreateUserRequest"/>
+      <output message="tns:CreateUserResponse"/>
+    </operation>
+    <operation name="UpdateUser">
+      <input message="tns:UpdateUserRequest"/>
+      <output message="tns:UpdateUserResponse"/>
+    </operation>
+    <operation name="DeleteUser">
+      <input message="tns:DeleteUserRequest"/>
+      <output message="tns:DeleteUserResponse"/>
+    </operation>
+    <operation name="ListUserPlaylists">
+      <input message="tns:ListUserPlaylistsRequest"/>
+      <output message="tns:ListUserPlaylistsResponse"/>
+    </operation>
+    <operation name="AddPlaylistToUser">
+      <input message="tns:AddPlaylistToUserRequest"/>
+      <output message="tns:AddPlaylistToUserResponse"/>
+    </operation>
+  </portType>
+
+  <!-- Binding -->
+  <binding name="UserServiceBinding" type="tns:UserServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <!-- Operações -->
+    <operation name="ListUsers">
+      <soap:operation soapAction="ListUsers"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="GetUserById">
+      <soap:operation soapAction="GetUserById"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="CreateUser">
+      <soap:operation soapAction="CreateUser"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="UpdateUser">
+      <soap:operation soapAction="UpdateUser"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="DeleteUser">
+      <soap:operation soapAction="DeleteUser"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="ListUserPlaylists">
+      <soap:operation soapAction="ListUserPlaylists"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="AddPlaylistToUser">
+      <soap:operation soapAction="AddPlaylistToUser"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <!-- Serviço -->
+  <service name="UserService">
+    <port name="UserServicePort" binding="tns:UserServiceBinding">
+      <soap:address location="http://localhost:8000/userwsdl"/>
+    </port>
+  </service>
+</definitions>
